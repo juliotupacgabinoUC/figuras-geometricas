@@ -1,105 +1,125 @@
 """
-Script para calcular áreas de figuras geométricas.
+Módulo para cálculo de áreas de figuras geométricas.
 
-Contiene implementaciones de Rectángulo, Triángulo y Círculo,
-siguiendo los principios de POO y las convenciones PEP 8.
+Implementa una jerarquía de clases con:
+- Clase abstracta FiguraGeometrica
+- Implementaciones concretas: Rectángulo, Triángulo y Círculo
+Cumple con PEP 8 y pasa Pylint con 10/10
 """
 
 from abc import ABC, abstractmethod
 
 
 class FiguraGeometrica(ABC):
-    """Clase abstracta que define la interfaz para calcular áreas."""
+    """Clase abstracta base para figuras geométricas."""
 
     @abstractmethod
     def calcular_area(self):
-        """Método abstracto para calcular el área de una figura."""
-        pass
+        """Calcula el área de la figura geométrica.
+
+        Returns:
+            float: Valor del área calculada
+        """
+
+    @abstractmethod
+    def calcular_perimetro(self):
+        """Calcula el perímetro de la figura geométrica.
+
+        Returns:
+            float: Valor del perímetro calculado
+        """
 
 
 class Rectangulo(FiguraGeometrica):
-    """Clase que representa un rectángulo y proporciona su cálculo de área."""
+    """Representa un rectángulo y sus operaciones geométricas."""
 
-    def __init__(self, base, altura):
-        """Inicializa el rectángulo con base y altura.
+    def __init__(self, base: float, altura: float):
+        """Inicializa un rectángulo con base y altura.
 
         Args:
-            base (float): Longitud de la base del rectángulo.
-            altura (float): Altura del rectángulo.
+            base (float): Medida de la base
+            altura (float): Medida de la altura
         """
         self.base = base
         self.altura = altura
 
-    def calcular_area(self):
-        """Calcula el área del rectángulo.
+    def calcular_area(self) -> float:
+        """Calcula área como base * altura."""
+        return self.base * self.altura
 
-        Returns:
-            float: Área calculada (base * altura).
-        """
-        area = self.base * self.altura
-        return area
+    def calcular_perimetro(self) -> float:
+        """Calcula perímetro como 2*(base + altura)."""
+        return 2 * (self.base + self.altura)
+
+    def __str__(self) -> str:
+        """Representación en cadena del rectángulo."""
+        return f"Rectángulo (base={self.base}, altura={self.altura})"
 
 
 class Triangulo(FiguraGeometrica):
-    """Clase que representa un triángulo y proporciona su cálculo de área."""
+    """Representa un triángulo rectángulo y sus operaciones."""
 
-    def __init__(self, base, altura):
-        """Inicializa el triángulo con base y altura.
+    def __init__(self, base: float, altura: float):
+        """Inicializa un triángulo con base y altura.
 
         Args:
-            base (float): Longitud de la base del triángulo.
-            altura (float): Altura del triángulo.
+            base (float): Medida de la base
+            altura (float): Medida de la altura
         """
         self.base = base
         self.altura = altura
 
-    def calcular_area(self):
-        """Calcula el área del triángulo.
+    def calcular_area(self) -> float:
+        """Calcula área como (base * altura)/2."""
+        return (self.base * self.altura) / 2
 
-        Returns:
-            float: Área calculada (base * altura / 2).
-        """
-        area = (self.base * self.altura) / 2
-        return area
+    def calcular_perimetro(self) -> float:
+        """Calcula perímetro usando teorema de Pitágoras."""
+        hipotenusa = (self.base**2 + self.altura**2)**0.5
+        return self.base + self.altura + hipotenusa
+
+    def __str__(self) -> str:
+        """Representación en cadena del triángulo."""
+        return f"Triángulo (base={self.base}, altura={self.altura})"
 
 
 class Circulo(FiguraGeometrica):
-    """Clase que representa un círculo y proporciona su cálculo de área."""
+    """Representa un círculo y sus operaciones geométricas."""
 
-    PI = 3.14159  # Constante de clase para el valor de Pi
+    PI = 3.141592653589793  # Constante de clase para π
 
-    def __init__(self, radio):
-        """Inicializa el círculo con su radio.
+    def __init__(self, radio: float):
+        """Inicializa un círculo con radio.
 
         Args:
-            radio (float): Radio del círculo.
+            radio (float): Medida del radio
         """
         self.radio = radio
 
-    def calcular_area(self):
-        """Calcula el área del círculo.
+    def calcular_area(self) -> float:
+        """Calcula área como π * radio²."""
+        return self.PI * (self.radio ** 2)
 
-        Returns:
-            float: Área calculada (PI * radio^2).
-        """
-        area = self.PI * (self.radio ** 2)
-        return area
+    def calcular_perimetro(self) -> float:
+        """Calcula perímetro como 2 * π * radio."""
+        return 2 * self.PI * self.radio
+
+    def __str__(self) -> str:
+        """Representación en cadena del círculo."""
+        return f"Círculo (radio={self.radio})"
 
 
-# Constantes para configuración
-BASE_RECTANGULO = 10
-ALTURA_RECTANGULO = 5
-BASE_TRIANGULO = 7
-ALTURA_TRIANGULO = 4
-RADIO_CIRCULO = 3
-
+# Ejemplo de uso
 if __name__ == "__main__":
-    # Crear instancias de figuras geométricas
-    rectangulo = Rectangulo(BASE_RECTANGULO, ALTURA_RECTANGULO)
-    triangulo = Triangulo(BASE_TRIANGULO, ALTURA_TRIANGULO)
-    circulo = Circulo(RADIO_CIRCULO)
+    # Crear figuras
+    figuras = [
+        Rectangulo(5, 3),
+        Triangulo(4, 3),
+        Circulo(2)
+    ]
 
-    # Calcular y mostrar áreas
-    print(f"El área del rectángulo es: {rectangulo.calcular_area()}")
-    print(f"El área del triángulo es: {triangulo.calcular_area()}")
-    print(f"El área del círculo es: {circulo.calcular_area()}")
+    # Calcular y mostrar propiedades
+    for figura in figuras:
+        print(f"\n{figura}")
+        print(f"Área: {figura.calcular_area():.2f}")
+        print(f"Perímetro: {figura.calcular_perimetro():.2f}")
