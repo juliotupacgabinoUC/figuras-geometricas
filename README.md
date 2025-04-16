@@ -17,7 +17,7 @@ Este repositorio contiene un script en Python para calcular áreas de figuras ge
 - ✅ Adición de documentación en README.md
 
 ## Resultados de Pylint
-El código actual tiene una calificación **10/10** en Pylint, cumpliendo con todos los estándares PEP 8.
+El código actual tiene una calificación **9.51/10** en Pylint, cumpliendo con todos los estándares PEP 8.
 
 ## Desarrollador
 | Apellidos y Nombres |
